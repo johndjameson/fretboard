@@ -26,7 +26,7 @@ class Pitches extends Component {
     ).toFixed(places)
   }
 
-  getDecoratedNotes = () => {
+  getDecoratedPitches = () => {
     const { notes, pitchCount, startingPitch } = this.props
     const decoratedPitches = []
 
@@ -41,7 +41,7 @@ class Pitches extends Component {
 
       decoratedPitches.push({
         frequency: this.getFrequency({ position, places: 2 }),
-        id: `${note}${octave}`,
+        name: `${note}${octave}`,
         note,
         position: i + 1
       })
@@ -53,7 +53,7 @@ class Pitches extends Component {
   render() {
     const { render } = this.props
 
-    return render({ notes: this.getDecoratedNotes() })
+    return render({ pitches: this.getDecoratedPitches() })
   }
 }
 

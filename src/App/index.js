@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Pitches from 'App/Pitches'
+import Pitch from 'App/Pitch'
 import './styles.css'
 
 class App extends Component {
@@ -36,11 +37,9 @@ class App extends Component {
 
         <Pitches
           referencePitch={referencePitch}
-          render={({ notes }) =>
-            notes.map(note => (
-              <div key={note.position}>
-                {note.id}, {note.frequency}
-              </div>
+          render={({ pitches }) =>
+            pitches.map(({ frequency, name, position }) => (
+              <Pitch frequency={frequency} key={position} name={name} />
             ))
           }
         />

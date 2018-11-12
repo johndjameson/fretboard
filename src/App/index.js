@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import Notes from 'App/Notes'
+import Pitches from 'App/Pitches'
 import './styles.css'
 
 class App extends Component {
   state = {
-    referencePitch: 440
+    referencePitch: 440,
+    selectedPitch: null
   }
 
   handleReferencePitchChange = e => {
@@ -33,7 +34,7 @@ class App extends Component {
 
         <hr />
 
-        <Notes
+        <Pitches
           referencePitch={referencePitch}
           render={({ notes }) =>
             notes.map(note => (

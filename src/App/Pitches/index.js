@@ -1,21 +1,21 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 
-class Notes extends Component {
+class Pitches extends Component {
   static propTypes = {
-    noteCount: PropTypes.number.isRequired,
     notes: PropTypes.arrayOf(PropTypes.string),
+    pitchCount: PropTypes.number.isRequired,
     referencePitch: PropTypes.number.isRequired,
     render: PropTypes.func.isRequired,
-    startingNote: PropTypes.number.isRequired
+    startingPitch: PropTypes.number.isRequired
   }
 
   static defaultProps = {
-    noteCount: 88,
     notes: ['A', 'B♭', 'B', 'C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭'],
+    pitchCount: 88,
     referencePitch: 440,
     render: () => null,
-    startingNote: 3
+    startingPitch: 3
   }
 
   getFrequency = ({ places, position }) => {
@@ -27,19 +27,19 @@ class Notes extends Component {
   }
 
   getDecoratedNotes = () => {
-    const { noteCount, notes, startingNote } = this.props
-    const decoratedNotes = []
+    const { notes, pitchCount, startingPitch } = this.props
+    const decoratedPitches = []
 
-    for (let i = 0; i < noteCount; i++) {
+    for (let i = 0; i < pitchCount; i++) {
       const note = notes[i % notes.length]
 
       const octave = Math.trunc(
-        (i - (startingNote - 1) + notes.length) / notes.length
+        (i - (startingPitch - 1) + notes.length) / notes.length
       )
 
       const position = i + 1
 
-      decoratedNotes.push({
+      decoratedPitches.push({
         frequency: this.getFrequency({ position, places: 2 }),
         id: `${note}${octave}`,
         note,
@@ -47,7 +47,7 @@ class Notes extends Component {
       })
     }
 
-    return decoratedNotes
+    return decoratedPitches
   }
 
   render() {
@@ -57,4 +57,4 @@ class Notes extends Component {
   }
 }
 
-export default Notes
+export default Pitches

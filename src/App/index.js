@@ -9,20 +9,36 @@ class App extends Component {
     selectedPitch: null
   }
 
+  handlePitchClick = pitch => {
+    this.setSelectedPitch(pitch)
+  }
+
   handleReferencePitchChange = e => {
     this.setReferencePitch(e.target.value)
+  }
+
+  isPitchSelected = pitch => {
+    const { selectedPitch } = this.state
+
+    return Boolean(selectedPitch && pitch.name === selectedPitch.name)
   }
 
   setReferencePitch = frequency => {
     this.setState({ referencePitch: Number(frequency) })
   }
 
+  setSelectedPitch = pitch => {
+    this.setState({ selectedPitch: pitch })
+  }
+
   render() {
-    const { referencePitch } = this.state
+    const { referencePitch, selectedPitch } = this.state
 
     return (
       <main>
         <p>Reference Pitch: {referencePitch}</p>
+
+        {selectedPitch && <p>Selected Pitch: {selectedPitch.name}</p>}
 
         <input
           max="448"
@@ -38,8 +54,14 @@ class App extends Component {
         <Pitches
           referencePitch={referencePitch}
           render={({ pitches }) =>
-            pitches.map(({ frequency, name, position }) => (
-              <Pitch frequency={frequency} key={position} name={name} />
+            pitches.map(pitch => (
+              <Pitch
+                frequency={pitch.frequency}
+                key={pitch.position}
+                name={pitch.name}
+                onClick={() => this.handlePitchClick(pitch)}
+                selected={this.isPitchSelected(pitch)}
+              />
             ))
           }
         />

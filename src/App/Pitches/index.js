@@ -15,7 +15,7 @@ class Pitches extends Component {
     pitchCount: 88,
     referencePitch: 440,
     render: () => null,
-    startingPitch: 3
+    startingPitch: 4
   }
 
   getFrequency = ({ places, position }) => {

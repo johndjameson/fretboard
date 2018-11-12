@@ -6,11 +6,11 @@ import './styles.css'
 class App extends Component {
   state = {
     referencePitch: 440,
-    selectedPitch: null
+    selectedPitches: []
   }
 
   handlePitchClick = pitch => {
-    this.setSelectedPitch(pitch)
+    this.togglePitchSelection(pitch)
   }
 
   handleReferencePitchChange = e => {
@@ -18,27 +18,35 @@ class App extends Component {
   }
 
   isPitchSelected = pitch => {
-    const { selectedPitch } = this.state
+    const { selectedPitches } = this.state
 
-    return Boolean(selectedPitch && pitch.name === selectedPitch.name)
+    return Boolean(selectedPitches.find(item => item.name === pitch.name))
   }
 
   setReferencePitch = frequency => {
     this.setState({ referencePitch: Number(frequency) })
   }
 
-  setSelectedPitch = pitch => {
-    this.setState({ selectedPitch: pitch })
+  togglePitchSelection = pitch => {
+    const { selectedPitches } = this.state
+
+    if (this.isPitchSelected(pitch)) {
+      this.setState({
+        selectedPitches: selectedPitches.filter(
+          item => item.name !== pitch.name
+        )
+      })
+    } else {
+      this.setState({ selectedPitches: [...selectedPitches, pitch] })
+    }
   }
 
   render() {
-    const { referencePitch, selectedPitch } = this.state
+    const { referencePitch } = this.state
 
     return (
       <main>
         <p>Reference Pitch: {referencePitch}</p>
-
-        {selectedPitch && <p>Selected Pitch: {selectedPitch.name}</p>}
 
         <input
           max="448"

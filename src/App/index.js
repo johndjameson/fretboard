@@ -1,12 +1,17 @@
-import React, { Component } from 'react'
-import Pitches from 'App/Pitches'
+import React, { Component, Fragment } from 'react'
 import Pitch from 'App/Pitch'
+import Pitches from 'App/Pitches'
+import String from 'App/String'
 import './styles.css'
 
 class App extends Component {
   state = {
     referencePitch: 440,
     selectedPitches: []
+  }
+
+  handleGuitarPitchClick = pitch => {
+    this.togglePitchSelection(pitch)
   }
 
   handlePitchClick = pitch => {
@@ -42,7 +47,7 @@ class App extends Component {
   }
 
   render() {
-    const { referencePitch } = this.state
+    const { referencePitch, selectedPitches } = this.state
 
     return (
       <main>
@@ -57,22 +62,64 @@ class App extends Component {
           value={referencePitch}
         />
 
-        <hr />
-
-        <Pitches
-          referencePitch={referencePitch}
-          render={({ pitches }) =>
-            pitches.map(pitch => (
-              <Pitch
-                frequency={pitch.frequency}
-                key={pitch.position}
-                name={pitch.name}
-                onClick={() => this.handlePitchClick(pitch)}
-                selected={this.isPitchSelected(pitch)}
-              />
-            ))
-          }
-        />
+        <div className="columns">
+          <Pitches
+            referencePitch={referencePitch}
+            render={({ pitches }) => (
+              <Fragment>
+                <div className="piano">
+                  {pitches.map(pitch => (
+                    <Pitch
+                      frequency={pitch.frequency}
+                      key={pitch.position}
+                      name={pitch.name}
+                      onClick={() => this.handlePitchClick(pitch)}
+                      selected={this.isPitchSelected(pitch)}
+                    />
+                  ))}
+                </div>
+                <div className="guitar">
+                  <String
+                    onPitchClick={this.handleGuitarPitchClick}
+                    pitches={pitches}
+                    selectedPitches={selectedPitches}
+                    tuning="E2"
+                  />
+                  <String
+                    onPitchClick={this.handleGuitarPitchClick}
+                    pitches={pitches}
+                    selectedPitches={selectedPitches}
+                    tuning="A2"
+                  />
+                  <String
+                    onPitchClick={this.handleGuitarPitchClick}
+                    pitches={pitches}
+                    selectedPitches={selectedPitches}
+                    tuning="D3"
+                  />
+                  <String
+                    onPitchClick={this.handleGuitarPitchClick}
+                    pitches={pitches}
+                    selectedPitches={selectedPitches}
+                    tuning="G3"
+                  />
+                  <String
+                    onPitchClick={this.handleGuitarPitchClick}
+                    pitches={pitches}
+                    selectedPitches={selectedPitches}
+                    tuning="B3"
+                  />
+                  <String
+                    onPitchClick={this.handleGuitarPitchClick}
+                    pitches={pitches}
+                    selectedPitches={selectedPitches}
+                    tuning="E4"
+                  />
+                </div>
+              </Fragment>
+            )}
+          />
+        </div>
       </main>
     )
   }

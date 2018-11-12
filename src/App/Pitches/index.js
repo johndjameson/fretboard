@@ -43,7 +43,7 @@ class Pitches extends Component {
         frequency: this.getFrequency({ position, places: 2 }),
         name: `${note}${octave}`,
         note,
-        position: i + 1
+        position
       })
     }
 
@@ -51,9 +51,9 @@ class Pitches extends Component {
   }
 
   render() {
-    const { render } = this.props
+    const { notes, render } = this.props
 
-    return render({ pitches: this.getDecoratedPitches() })
+    return render({ notes, pitches: this.getDecoratedPitches() })
   }
 }
 

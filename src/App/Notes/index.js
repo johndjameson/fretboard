@@ -7,7 +7,7 @@ class Notes extends Component {
     notes: PropTypes.arrayOf(PropTypes.string),
     referencePitch: PropTypes.number.isRequired,
     render: PropTypes.func.isRequired,
-    startingNote: PropTypes.string.isRequired
+    startingNote: PropTypes.number.isRequired
   }
 
   static defaultProps = {
@@ -15,17 +15,7 @@ class Notes extends Component {
     notes: ['A', 'B♭', 'B', 'C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭'],
     referencePitch: 440,
     render: () => null,
-    startingNote: 'C'
-  }
-
-  constructor(props) {
-    const { notes, startingNote } = props
-
-    super(props)
-
-    this.state = {
-      startingNoteIndex: notes.indexOf(startingNote)
-    }
+    startingNote: 3
   }
 
   getFrequency = ({ places, position }) => {
@@ -37,15 +27,14 @@ class Notes extends Component {
   }
 
   getDecoratedNotes = () => {
-    const { startingNoteIndex } = this.state
-    const { noteCount, notes } = this.props
+    const { noteCount, notes, startingNote } = this.props
     const decoratedNotes = []
 
     for (let i = 0; i < noteCount; i++) {
       const note = notes[i % notes.length]
 
       const octave = Math.trunc(
-        (i - startingNoteIndex + notes.length) / notes.length
+        (i - (startingNote - 1) + notes.length) / notes.length
       )
 
       const position = i + 1

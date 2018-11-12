@@ -16,9 +16,11 @@ class App extends Component {
   }
 
   render() {
+    const { referencePitch } = this.state
+
     return (
       <main>
-        <p>Reference Pitch: {this.state.referencePitch}</p>
+        <p>Reference Pitch: {referencePitch}</p>
 
         <input
           max="448"
@@ -26,16 +28,16 @@ class App extends Component {
           onChange={this.handleReferencePitchChange}
           step="1"
           type="range"
-          value={this.state.referencePitch}
+          value={referencePitch}
         />
 
         <hr />
 
         <Notes
-          referencePitch={this.state.referencePitch}
+          referencePitch={referencePitch}
           render={({ notes }) =>
             notes.map(note => (
-              <div key={note.id}>
+              <div key={note.position}>
                 {note.id}, {note.frequency}
               </div>
             ))

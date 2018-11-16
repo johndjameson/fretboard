@@ -1,6 +1,22 @@
+// *************************************
+//
+//   Index
+//   -> Application entry
+//
+// *************************************
+
+// ----- Imports ----- //
+
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import App from './App'
+import Root from './rootApp/components/Root'
 
-ReactDOM.render(<App />, document.querySelector('#root'))
+// ----- Assets ----- //
+
+import './index.css'
+
+// -------------------------------------
+//   Main
+// -------------------------------------
+
+ReactDOM.render(<Root />, document.querySelector('#js-root'))

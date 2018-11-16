@@ -1,8 +1,31 @@
+// *************************************
+//
+//   Note App
+//   -> Scale creator
+//
+// *************************************
+
+// -------------------------------------
+//   Imports
+// -------------------------------------
+
+// ----- Packages ----- //
+
 import React, { Component, Fragment } from 'react'
-import Pitch from 'App/Pitch'
-import Pitches from 'App/Pitches'
-import String from 'App/String'
+
+// ----- Local ----- //
+
+import Pitch from 'noteApp/components/Pitch'
+import Pitches from 'noteApp/components/Pitches'
+import String from 'noteApp/components/String'
+
+// ----- Assets ----- //
+
 import './styles.css'
+
+// -------------------------------------
+//   Component
+// -------------------------------------
 
 class App extends Component {
   state = {
@@ -12,7 +35,7 @@ class App extends Component {
     selectedPitches: []
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     const { key } = this.state
 
     if (key !== prevState.key) {
@@ -205,5 +228,9 @@ class App extends Component {
     )
   }
 }
+
+// -------------------------------------
+//   Export
+// -------------------------------------
 
 export default App

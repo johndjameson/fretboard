@@ -19,7 +19,7 @@ import { connect } from 'react-redux'
 import Pitch from 'noteApp/components/Pitch'
 import Pitches from 'noteApp/components/Pitches'
 import String from 'noteApp/components/String'
-import { updateKeyNote } from 'noteApp/actions'
+import { setKeyNote, setReferencePitch } from 'noteApp/actions'
 
 // ----- Assets ----- //
 
@@ -31,7 +31,6 @@ import './styles.css'
 
 class App extends Component {
   state = {
-    referencePitch: 440,
     scale: null,
     selectedPitches: []
   }
@@ -72,31 +71,10 @@ class App extends Component {
   }
 
   handleKeyChange = ({ e, notes }) => {
-    const { updateKeyNote } = this.props
+    const { setKeyNote } = this.props
     const keyNote = notes[e.target.value]
 
-    console.log(e.target.value)
-
-    updateKeyNote(keyNote)
-  }
-
-  handleMinorClick = pitches => {
-    this.setState({
-      selectedPitches: pitches.filter(pitch => {
-        switch (pitch.note) {
-          case 'A♭':
-          case 'B♭':
-          case 'C':
-          case 'D':
-          case 'E♭':
-          case 'F':
-          case 'G':
-            return true
-          default:
-            return false
-        }
-      })
-    })
+    setKeyNote({ keyNote })
   }
 
   handlePitchClick = pitch => {
@@ -104,17 +82,15 @@ class App extends Component {
   }
 
   handleReferencePitchChange = e => {
-    this.setReferencePitch(e.target.value)
+    const { setReferencePitch } = this.props
+
+    setReferencePitch({ frequency: e.target.value })
   }
 
   isPitchSelected = pitch => {
     const { selectedPitches } = this.state
 
     return Boolean(selectedPitches.find(item => item.name === pitch.name))
-  }
-
-  setReferencePitch = frequency => {
-    this.setState({ referencePitch: Number(frequency) })
   }
 
   togglePitchSelection = pitch => {
@@ -132,10 +108,8 @@ class App extends Component {
   }
 
   render() {
-    const { keyNote } = this.props
-    const { referencePitch, selectedPitches } = this.state
-
-    console.log(keyNote)
+    const { keyNote, referencePitch } = this.props
+    const { selectedPitches } = this.state
 
     return (
       <main>
@@ -233,15 +207,17 @@ class App extends Component {
 // -------------------------------------
 
 const mapStateToProps = state => {
-  const { keyNote } = state.notes
+  const { keyNote, referencePitch } = state.notes
 
   return {
-    keyNote
+    keyNote,
+    referencePitch
   }
 }
 
 const mapDispatchToProps = {
-  updateKeyNote
+  setKeyNote,
+  setReferencePitch
 }
 
 export default connect(

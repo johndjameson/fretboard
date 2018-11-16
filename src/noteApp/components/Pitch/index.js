@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 
 const Pitch = ({ frequency, name, onClick, position, selected }) => {
   const classes = {
-    base: classNames({ selected })
+    span: classNames({ selected })
   }
 
   return (
-    <div className={classes.base} onClick={onClick}>
-      {position}. {name}, {frequency}
+    <div onClick={onClick}>
+      <span className={classes.span}>
+        {position}. {name}, {frequency}
+      </span>
     </div>
   )
 }

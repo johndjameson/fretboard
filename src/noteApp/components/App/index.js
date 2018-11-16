@@ -17,7 +17,7 @@ import { connect } from 'react-redux'
 // ----- Local ----- //
 
 import Pitch from 'noteApp/components/Pitch'
-import String from 'noteApp/components/String'
+import GuitarString from 'noteApp/containers/GuitarString'
 import { setKeyNote, setReferencePitch } from 'noteApp/actions'
 
 // ----- Assets ----- //
@@ -167,37 +167,37 @@ class App extends Component {
             ))}
           </div>
           <div className="guitar">
-            <String
+            <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
               pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="E2"
             />
-            <String
+            <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
               pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="A2"
             />
-            <String
+            <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
               pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="D3"
             />
-            <String
+            <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
               pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="G3"
             />
-            <String
+            <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
               pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="B3"
             />
-            <String
+            <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
               pitches={pitches}
               selectedPitches={selectedPitches}

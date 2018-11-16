@@ -1,13 +1,31 @@
+// *************************************
+//
+//   GuitarString
+//   -> Fretted guitar string
+//
+// *************************************
+
+// -------------------------------------
+//   Imports
+// -------------------------------------
+
+// ----- Packages ----- //
+
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-class String extends Component {
+// -------------------------------------
+//   Component
+// -------------------------------------
+
+class GuitarString extends Component {
   static defaultProps = {
     frets: 22,
     onPitchClick: () => null,
-    pitches: [],
-    selectedPitches: [],
+    pitches: null,
+    selectedPitches: null,
     tuning: null
   }
 
@@ -34,6 +52,12 @@ class String extends Component {
     return Boolean(selectedPitches.find(item => item.name === pitch.name))
   }
 
+  isPitchTonic = pitch => {
+    const { keyNote } = this.props
+
+    return pitch.note === keyNote
+  }
+
   render() {
     const { frets, onPitchClick, pitches } = this.props
 
@@ -46,7 +70,10 @@ class String extends Component {
       <div className="string">
         {stringPitches.map((pitch, index) => (
           <div
-            className={classNames({ selected: this.isPitchSelected(pitch) })}
+            className={classNames({
+              selected: this.isPitchSelected(pitch),
+              tonic: this.isPitchTonic(pitch)
+            })}
             onClick={() => onPitchClick(pitch)}
             key={pitch.name}>
             {index} {pitch.name}
@@ -57,4 +84,13 @@ class String extends Component {
   }
 }
 
-export default String
+const mapStateToProps = state => {
+  const { keyNote, pitches } = state.notes
+
+  return {
+    keyNote,
+    pitches
+  }
+}
+
+export default connect(mapStateToProps)(GuitarString)

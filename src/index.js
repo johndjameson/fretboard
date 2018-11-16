@@ -9,14 +9,28 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Root from './rootApp/components/Root'
+import Root from 'rootApp/components/Root'
+import { createStore } from 'redux'
+
+// ----- Local ----- //
+
+import reducers from 'rootApp/reducers'
 
 // ----- Assets ----- //
 
 import './index.css'
 
 // -------------------------------------
+//   Setup
+// -------------------------------------
+
+const store = createStore(
+  reducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+
+// -------------------------------------
 //   Main
 // -------------------------------------
 
-ReactDOM.render(<Root />, document.querySelector('#js-root'))
+ReactDOM.render(<Root store={store} />, document.querySelector('#js-root'))

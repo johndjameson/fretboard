@@ -12,12 +12,14 @@
 // ----- Packages ----- //
 
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 
 // ----- Local ----- //
 
 import Pitch from 'noteApp/components/Pitch'
 import Pitches from 'noteApp/components/Pitches'
 import String from 'noteApp/components/String'
+import { updateKeyNote } from 'noteApp/actions'
 
 // ----- Assets ----- //
 
@@ -29,18 +31,9 @@ import './styles.css'
 
 class App extends Component {
   state = {
-    key: 'C',
     referencePitch: 440,
     scale: null,
     selectedPitches: []
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { key } = this.state
-
-    if (key !== prevState.key) {
-      this.handleMajorClick(this.pitches)
-    }
   }
 
   clearSelectedPitches = () => {
@@ -56,10 +49,10 @@ class App extends Component {
   }
 
   handleMajorClick = pitches => {
-    const { key } = this.state
+    const { keyNote } = this.state
     const intervals = [1, 3, 5, 6, 8, 10, 12]
 
-    const lowestTonic = pitches.find(pitch => pitch.note === key)
+    const lowestTonic = pitches.find(pitch => pitch.note === keyNote)
     const lowestTonicIndex = pitches.indexOf(lowestTonic)
 
     const scaleNotes = intervals.map(
@@ -79,9 +72,12 @@ class App extends Component {
   }
 
   handleKeyChange = ({ e, notes }) => {
-    this.setState({
-      key: notes[e.target.value]
-    })
+    const { updateKeyNote } = this.props
+    const keyNote = notes[e.target.value]
+
+    console.log(e.target.value)
+
+    updateKeyNote(keyNote)
   }
 
   handleMinorClick = pitches => {
@@ -136,7 +132,10 @@ class App extends Component {
   }
 
   render() {
-    const { key, referencePitch, selectedPitches } = this.state
+    const { keyNote } = this.props
+    const { referencePitch, selectedPitches } = this.state
+
+    console.log(keyNote)
 
     return (
       <main>
@@ -154,14 +153,14 @@ class App extends Component {
                 value={referencePitch}
               />
 
-              <p>Key: {notes[notes.indexOf(key)]}</p>
+              <p>Key: {keyNote}</p>
               <input
                 max="11"
                 min="0"
                 onChange={e => this.handleKeyChange({ e, notes })}
                 step="1"
                 type="range"
-                value={notes.indexOf(key)}
+                value={notes.indexOf(keyNote)}
               />
 
               <button onClick={() => this.handleMajorClick(pitches)}>
@@ -233,4 +232,19 @@ class App extends Component {
 //   Export
 // -------------------------------------
 
-export default App
+const mapStateToProps = state => {
+  const { keyNote } = state.notes
+
+  return {
+    keyNote
+  }
+}
+
+const mapDispatchToProps = {
+  updateKeyNote
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)

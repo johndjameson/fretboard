@@ -12,6 +12,7 @@
 // ----- Local ----- //
 
 import { SET_KEY_NOTE, SET_REFERENCE_PITCH } from 'noteApp/types'
+import { getPitches, standardTuning } from 'noteApp/helpers/pitches'
 
 // -------------------------------------
 //   Reducer
@@ -19,7 +20,9 @@ import { SET_KEY_NOTE, SET_REFERENCE_PITCH } from 'noteApp/types'
 
 const initialState = {
   keyNote: 'C',
-  referencePitch: 440
+  pitches: getPitches({ pitchCount: 88 }),
+  referencePitch: standardTuning,
+  render: () => null
 }
 
 const noteReducer = (state = initialState, action) => {

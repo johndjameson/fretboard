@@ -2,14 +2,14 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-const Pitch = ({ frequency, name, onClick, selected }) => {
+const Pitch = ({ frequency, name, onClick, position, selected }) => {
   const classes = {
     base: classNames({ selected })
   }
 
   return (
     <div className={classes.base} onClick={onClick}>
-      {name}, {frequency}
+      {position}. {name}, {frequency}
     </div>
   )
 }
@@ -18,6 +18,7 @@ Pitch.propTypes = {
   frequency: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  position: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired
 }
 
@@ -25,6 +26,7 @@ Pitch.defaultProps = {
   frequency: null,
   name: null,
   onClick: () => null,
+  position: null,
   selected: false
 }
 

@@ -31,14 +31,15 @@ const getFrequency = ({
   places,
   position,
   referencePitch = standardTuning
-}) =>
+} = {}) =>
   (Math.pow(2, (position - 49) / notes.length) * referencePitch).toFixed(places)
 
 const getPitches = ({
   notes = standardNotes,
-  pitchCount,
+  pitchCount = 88,
+  referencePitch = standardTuning,
   startingPitch = 4
-}) => {
+} = {}) => {
   const pitches = []
 
   for (let i = 0; i < pitchCount; i++) {
@@ -51,7 +52,7 @@ const getPitches = ({
     const position = i + 1
 
     pitches.push({
-      frequency: getFrequency({ notes, places: 2, position }),
+      frequency: getFrequency({ notes, places: 2, position, referencePitch }),
       name: `${note}${octave}`,
       note,
       position

@@ -46,15 +46,14 @@ class App extends Component {
     this.clearSelectedPitches()
   }
 
-  handleMajorClick = () => {
+  handleScaleClick = ({ intervals, scale }) => {
     const { pitches, keyNote } = this.props
-    const intervals = [1, 3, 5, 6, 8, 10, 12]
 
     const lowestTonic = pitches.find(pitch => pitch.note === keyNote)
     const lowestTonicIndex = pitches.indexOf(lowestTonic)
 
     const scaleNotes = intervals.map(
-      interval => pitches[interval + lowestTonicIndex - 1].note
+      interval => pitches[interval + lowestTonicIndex].note
     )
 
     const scalePitches = pitches.filter(pitch =>
@@ -64,7 +63,7 @@ class App extends Component {
     this.pitches = pitches
 
     this.setState({
-      scale: 'major',
+      scale,
       selectedPitches: scalePitches
     })
   }
@@ -132,7 +131,26 @@ class App extends Component {
           value={notes.indexOf(keyNote)}
         />
 
-        <button onClick={this.handleMajorClick}>Major</button>
+        <button
+          onClick={() =>
+            this.handleScaleClick({
+              intervals: [0, 2, 4, 5, 7, 9, 11],
+              scale: 'major'
+            })
+          }>
+          Major
+        </button>
+
+        <button
+          onClick={() =>
+            this.handleScaleClick({
+              intervals: [0, 2, 3, 5, 7, 8, 10],
+              scale: 'minor'
+            })
+          }>
+          Minor
+        </button>
+
         <button onClick={this.handleClearClick}>Clear</button>
 
         <div className="columns">
@@ -143,6 +161,7 @@ class App extends Component {
                 key={pitch.position}
                 name={pitch.name}
                 onClick={() => this.handlePitchClick(pitch)}
+                position={pitch.position}
                 selected={this.isPitchSelected(pitch)}
               />
             ))}

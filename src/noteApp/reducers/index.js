@@ -25,7 +25,7 @@ import {
 const initialState = {
   keyNote: 'C',
   notes: standardNotes,
-  pitches: getPitches({ pitchCount: 88 }),
+  pitches: getPitches(),
   referencePitch: standardTuning,
   render: () => null
 }
@@ -40,6 +40,7 @@ const noteReducer = (state = initialState, action) => {
     case SET_REFERENCE_PITCH:
       return {
         ...state,
+        pitches: getPitches({ referencePitch: action.referencePitch }),
         referencePitch: action.referencePitch
       }
     default:

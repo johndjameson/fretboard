@@ -11,13 +11,12 @@
 
 // ----- Packages ----- //
 
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 // ----- Local ----- //
 
 import Pitch from 'noteApp/components/Pitch'
-import Pitches from 'noteApp/components/Pitches'
 import String from 'noteApp/components/String'
 import { setKeyNote, setReferencePitch } from 'noteApp/actions'
 
@@ -47,8 +46,8 @@ class App extends Component {
     this.clearSelectedPitches()
   }
 
-  handleMajorClick = pitches => {
-    const { keyNote } = this.state
+  handleMajorClick = () => {
+    const { pitches, keyNote } = this.props
     const intervals = [1, 3, 5, 6, 8, 10, 12]
 
     const lowestTonic = pitches.find(pitch => pitch.note === keyNote)
@@ -70,8 +69,8 @@ class App extends Component {
     })
   }
 
-  handleKeyChange = ({ e, notes }) => {
-    const { setKeyNote } = this.props
+  handleKeyChange = e => {
+    const { notes, setKeyNote } = this.props
     const keyNote = notes[e.target.value]
 
     setKeyNote({ keyNote })
@@ -108,95 +107,85 @@ class App extends Component {
   }
 
   render() {
-    const { keyNote, referencePitch } = this.props
+    const { keyNote, notes, pitches, referencePitch } = this.props
     const { selectedPitches } = this.state
 
     return (
       <main>
-        <Pitches
-          referencePitch={referencePitch}
-          render={({ notes, pitches }) => (
-            <Fragment>
-              <p>Reference Pitch: {referencePitch}</p>
-              <input
-                max="448"
-                min="424"
-                onChange={this.handleReferencePitchChange}
-                step="1"
-                type="range"
-                value={referencePitch}
-              />
-
-              <p>Key: {keyNote}</p>
-              <input
-                max="11"
-                min="0"
-                onChange={e => this.handleKeyChange({ e, notes })}
-                step="1"
-                type="range"
-                value={notes.indexOf(keyNote)}
-              />
-
-              <button onClick={() => this.handleMajorClick(pitches)}>
-                Major
-              </button>
-
-              <button onClick={this.handleClearClick}>Clear</button>
-
-              <div className="columns">
-                <div className="piano">
-                  {pitches.map(pitch => (
-                    <Pitch
-                      frequency={pitch.frequency}
-                      key={pitch.position}
-                      name={pitch.name}
-                      onClick={() => this.handlePitchClick(pitch)}
-                      selected={this.isPitchSelected(pitch)}
-                    />
-                  ))}
-                </div>
-                <div className="guitar">
-                  <String
-                    onPitchClick={this.handleGuitarPitchClick}
-                    pitches={pitches}
-                    selectedPitches={selectedPitches}
-                    tuning="E2"
-                  />
-                  <String
-                    onPitchClick={this.handleGuitarPitchClick}
-                    pitches={pitches}
-                    selectedPitches={selectedPitches}
-                    tuning="A2"
-                  />
-                  <String
-                    onPitchClick={this.handleGuitarPitchClick}
-                    pitches={pitches}
-                    selectedPitches={selectedPitches}
-                    tuning="D3"
-                  />
-                  <String
-                    onPitchClick={this.handleGuitarPitchClick}
-                    pitches={pitches}
-                    selectedPitches={selectedPitches}
-                    tuning="G3"
-                  />
-                  <String
-                    onPitchClick={this.handleGuitarPitchClick}
-                    pitches={pitches}
-                    selectedPitches={selectedPitches}
-                    tuning="B3"
-                  />
-                  <String
-                    onPitchClick={this.handleGuitarPitchClick}
-                    pitches={pitches}
-                    selectedPitches={selectedPitches}
-                    tuning="E4"
-                  />
-                </div>
-              </div>
-            </Fragment>
-          )}
+        <p>Reference Pitch: {referencePitch}</p>
+        <input
+          max="448"
+          min="424"
+          onChange={this.handleReferencePitchChange}
+          step="1"
+          type="range"
+          value={referencePitch}
         />
+
+        <p>Key: {keyNote}</p>
+        <input
+          max="11"
+          min="0"
+          onChange={this.handleKeyChange}
+          step="1"
+          type="range"
+          value={notes.indexOf(keyNote)}
+        />
+
+        <button onClick={this.handleMajorClick}>Major</button>
+        <button onClick={this.handleClearClick}>Clear</button>
+
+        <div className="columns">
+          <div className="piano">
+            {pitches.map(pitch => (
+              <Pitch
+                frequency={pitch.frequency}
+                key={pitch.position}
+                name={pitch.name}
+                onClick={() => this.handlePitchClick(pitch)}
+                selected={this.isPitchSelected(pitch)}
+              />
+            ))}
+          </div>
+          <div className="guitar">
+            <String
+              onPitchClick={this.handleGuitarPitchClick}
+              pitches={pitches}
+              selectedPitches={selectedPitches}
+              tuning="E2"
+            />
+            <String
+              onPitchClick={this.handleGuitarPitchClick}
+              pitches={pitches}
+              selectedPitches={selectedPitches}
+              tuning="A2"
+            />
+            <String
+              onPitchClick={this.handleGuitarPitchClick}
+              pitches={pitches}
+              selectedPitches={selectedPitches}
+              tuning="D3"
+            />
+            <String
+              onPitchClick={this.handleGuitarPitchClick}
+              pitches={pitches}
+              selectedPitches={selectedPitches}
+              tuning="G3"
+            />
+            <String
+              onPitchClick={this.handleGuitarPitchClick}
+              pitches={pitches}
+              selectedPitches={selectedPitches}
+              tuning="B3"
+            />
+            <String
+              onPitchClick={this.handleGuitarPitchClick}
+              pitches={pitches}
+              selectedPitches={selectedPitches}
+              tuning="E4"
+            />
+          </div>
+        </div>
       </main>
     )
   }
@@ -207,10 +196,12 @@ class App extends Component {
 // -------------------------------------
 
 const mapStateToProps = state => {
-  const { keyNote, referencePitch } = state.notes
+  const { keyNote, notes, pitches, referencePitch } = state.notes
 
   return {
     keyNote,
+    notes,
+    pitches,
     referencePitch
   }
 }

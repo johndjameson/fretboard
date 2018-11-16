@@ -65,4 +65,4 @@ const getPitches = ({
 //   Exports
 // -------------------------------------
 
-export { getPitches, standardTuning }
+export { getPitches, standardNotes, standardTuning }

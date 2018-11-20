@@ -24,6 +24,22 @@ import { setKeyNote, setReferencePitch } from 'noteApp/actions'
 
 import './styles.css'
 
+const scales = {
+  major: {
+    displayName: 'Major',
+    intervals: [0, 2, 4, 5, 7, 9, 11],
+    mode: 'Ionian',
+    name: 'major'
+  },
+
+  minor: {
+    displayName: 'Minor',
+    intervals: [0, 2, 3, 5, 7, 8, 10],
+    mode: 'Aeolian',
+    name: 'minor'
+  }
+}
+
 // -------------------------------------
 //   Component
 // -------------------------------------
@@ -46,7 +62,7 @@ class App extends Component {
     this.clearSelectedPitches()
   }
 
-  handleScaleClick = ({ intervals, scale }) => {
+  setScale = ({ intervals, name }) => {
     const { pitches, keyNote } = this.props
 
     const lowestTonic = pitches.find(pitch => pitch.note === keyNote)
@@ -60,10 +76,8 @@ class App extends Component {
       scaleNotes.includes(pitch.note)
     )
 
-    this.pitches = pitches
-
     this.setState({
-      scale,
+      scale: name,
       selectedPitches: scalePitches
     })
   }
@@ -131,26 +145,8 @@ class App extends Component {
           value={notes.indexOf(keyNote)}
         />
 
-        <button
-          onClick={() =>
-            this.handleScaleClick({
-              intervals: [0, 2, 4, 5, 7, 9, 11],
-              scale: 'major'
-            })
-          }>
-          Major
-        </button>
-
-        <button
-          onClick={() =>
-            this.handleScaleClick({
-              intervals: [0, 2, 3, 5, 7, 8, 10],
-              scale: 'minor'
-            })
-          }>
-          Minor
-        </button>
-
+        <button onClick={() => this.setScale(scales.major)}>Major</button>
+        <button onClick={() => this.setScale(scales.minor)}>Minor</button>
         <button onClick={this.handleClearClick}>Clear</button>
 
         <div className="columns">

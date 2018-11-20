@@ -11,23 +11,24 @@
 
 // ----- Local ----- //
 
-import { SET_KEY_NOTE, SET_REFERENCE_PITCH } from 'noteApp/types'
+import { SET_KEY_NOTE, SET_REFERENCE_PITCH, SET_SCALE } from 'noteApp/types'
 import {
   getPitches,
   standardNotes,
   standardTuning
 } from 'noteApp/helpers/pitches'
+import * as scales from 'noteApp/helpers/scales'
 
 // -------------------------------------
 //   Reducer
 // -------------------------------------
 
 const initialState = {
-  keyNote: 'C',
+  keyNote: 'E',
   notes: standardNotes,
   pitches: getPitches(),
   referencePitch: standardTuning,
-  render: () => null
+  scale: scales.major
 }
 
 const noteReducer = (state = initialState, action) => {
@@ -42,6 +43,11 @@ const noteReducer = (state = initialState, action) => {
         ...state,
         pitches: getPitches({ referencePitch: action.referencePitch }),
         referencePitch: action.referencePitch
+      }
+    case SET_SCALE:
+      return {
+        ...state,
+        scale: action.scale
       }
     default:
       return state

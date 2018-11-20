@@ -25,6 +25,7 @@ class GuitarString extends Component {
     frets: 22,
     onPitchClick: () => null,
     pitches: null,
+    scaleNotes: null,
     selectedPitches: null,
     tuning: null
   }
@@ -33,6 +34,7 @@ class GuitarString extends Component {
     frets: PropTypes.number.isRequired,
     onPitchClick: PropTypes.func.isRequired,
     pitches: PropTypes.array.isRequired,
+    scaleNotes: PropTypes.array.isRequired,
     selectedPitches: PropTypes.array.isRequired,
     tuning: PropTypes.string.isRequired
   }
@@ -44,6 +46,12 @@ class GuitarString extends Component {
 
     this.pitch = pitches.find(pitch => pitch.name === tuning)
     this.pitchIndex = pitches.indexOf(this.pitch)
+  }
+
+  isPitchDiatonic = pitch => {
+    const { scaleNotes } = this.props
+
+    return scaleNotes.includes(pitch.note)
   }
 
   isPitchSelected = pitch => {
@@ -71,6 +79,7 @@ class GuitarString extends Component {
         {stringPitches.map((pitch, index) => (
           <div
             className={classNames({
+              diatonic: this.isPitchDiatonic(pitch),
               selected: this.isPitchSelected(pitch),
               tonic: this.isPitchTonic(pitch)
             })}

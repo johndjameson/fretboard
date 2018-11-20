@@ -16,29 +16,14 @@ import { connect } from 'react-redux'
 
 // ----- Local ----- //
 
+import * as scales from 'noteApp/helpers/scales'
 import Pitch from 'noteApp/components/Pitch'
 import GuitarString from 'noteApp/containers/GuitarString'
-import { setKeyNote, setReferencePitch } from 'noteApp/actions'
+import { setKeyNote, setReferencePitch, setScale } from 'noteApp/actions'
 
 // ----- Assets ----- //
 
 import './styles.css'
-
-const scales = {
-  major: {
-    displayName: 'Major',
-    intervals: [0, 2, 4, 5, 7, 9, 11],
-    mode: 'Ionian',
-    name: 'major'
-  },
-
-  minor: {
-    displayName: 'Minor',
-    intervals: [0, 2, 3, 5, 7, 8, 10],
-    mode: 'Aeolian',
-    name: 'minor'
-  }
-}
 
 // -------------------------------------
 //   Component
@@ -46,7 +31,6 @@ const scales = {
 
 class App extends Component {
   state = {
-    scale: null,
     selectedPitches: []
   }
 
@@ -62,8 +46,12 @@ class App extends Component {
     this.clearSelectedPitches()
   }
 
-  setSelectedPitches = ({ intervals, name }) => {
-    const { pitches, keyNote } = this.props
+  getScaleNotes = () => {
+    const {
+      keyNote,
+      pitches,
+      scale: { intervals }
+    } = this.props
 
     const lowestTonic = pitches.find(pitch => pitch.note === keyNote)
     const lowestTonicIndex = pitches.indexOf(lowestTonic)
@@ -72,14 +60,7 @@ class App extends Component {
       interval => pitches[interval + lowestTonicIndex].note
     )
 
-    const scalePitches = pitches.filter(pitch =>
-      scaleNotes.includes(pitch.note)
-    )
-
-    this.setState({
-      scale: name,
-      selectedPitches: scalePitches
-    })
+    return scaleNotes
   }
 
   handleKeyChange = e => {
@@ -120,8 +101,18 @@ class App extends Component {
   }
 
   render() {
-    const { keyNote, notes, pitches, referencePitch } = this.props
     const { selectedPitches } = this.state
+    const {
+      keyNote,
+      notes,
+      pitches,
+      referencePitch,
+      scale,
+      setScale
+    } = this.props
+
+    const scaleArray = Object.keys(scales).map(key => scales[key])
+    const scaleNotes = this.getScaleNotes()
 
     return (
       <main>
@@ -145,13 +136,20 @@ class App extends Component {
           value={notes.indexOf(keyNote)}
         />
 
-        <button onClick={() => this.setSelectedPitches(scales.major)}>
-          Major
+        {scaleArray.map(scaleItem => (
+          <button
+            key={scaleItem.name}
+            onClick={() => setScale(scaleItem)}
+            disabled={scaleItem.name === scale.name}>
+            {scaleItem.displayName}
+          </button>
+        ))}
+
+        <button
+          disabled={selectedPitches.length === 0}
+          onClick={this.handleClearClick}>
+          Clear
         </button>
-        <button onClick={() => this.setSelectedPitches(scales.minor)}>
-          Minor
-        </button>
-        <button onClick={this.handleClearClick}>Clear</button>
 
         <div className="columns">
           <div className="piano">
@@ -169,31 +167,37 @@ class App extends Component {
           <div className="guitar">
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
+              scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="E2"
             />
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
+              scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="A2"
             />
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
+              scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="D3"
             />
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
+              scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="G3"
             />
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
+              scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="B3"
             />
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
+              scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="E4"
             />
@@ -209,19 +213,21 @@ class App extends Component {
 // -------------------------------------
 
 const mapStateToProps = state => {
-  const { keyNote, notes, pitches, referencePitch } = state.notes
+  const { keyNote, notes, pitches, referencePitch, scale } = state.notes
 
   return {
     keyNote,
     notes,
     pitches,
-    referencePitch
+    referencePitch,
+    scale
   }
 }
 
 const mapDispatchToProps = {
   setKeyNote,
-  setReferencePitch
+  setReferencePitch,
+  setScale
 }
 
 export default connect(

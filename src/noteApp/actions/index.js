@@ -11,7 +11,7 @@
 
 // ----- Local ----- //
 
-import { SET_KEY_NOTE, SET_REFERENCE_PITCH } from 'noteApp/types'
+import { SET_KEY_NOTE, SET_REFERENCE_PITCH, SET_SCALE } from 'noteApp/types'
 
 // -------------------------------------
 //   Actions
@@ -25,4 +25,9 @@ export const setKeyNote = ({ keyNote }) => ({
 export const setReferencePitch = ({ frequency }) => ({
   referencePitch: Number(frequency),
   type: SET_REFERENCE_PITCH
+})
+
+export const setScale = scale => ({
+  scale,
+  type: SET_SCALE
 })

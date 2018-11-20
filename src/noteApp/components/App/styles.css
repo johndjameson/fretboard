@@ -15,10 +15,15 @@
   flex-grow: 1;
 }
 
-.selected {
+.diatonic {
   background-color: #ddd;
 }
 
 .tonic {
   background-color: #bbb;
+}
+
+.selected {
+  background-color: #91c084;
+  color: #fff;
 }

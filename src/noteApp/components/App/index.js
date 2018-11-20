@@ -62,7 +62,7 @@ class App extends Component {
     this.clearSelectedPitches()
   }
 
-  setScale = ({ intervals, name }) => {
+  setSelectedPitches = ({ intervals, name }) => {
     const { pitches, keyNote } = this.props
 
     const lowestTonic = pitches.find(pitch => pitch.note === keyNote)
@@ -145,8 +145,12 @@ class App extends Component {
           value={notes.indexOf(keyNote)}
         />
 
-        <button onClick={() => this.setScale(scales.major)}>Major</button>
-        <button onClick={() => this.setScale(scales.minor)}>Minor</button>
+        <button onClick={() => this.setSelectedPitches(scales.major)}>
+          Major
+        </button>
+        <button onClick={() => this.setSelectedPitches(scales.minor)}>
+          Minor
+        </button>
         <button onClick={this.handleClearClick}>Clear</button>
 
         <div className="columns">
@@ -165,37 +169,31 @@ class App extends Component {
           <div className="guitar">
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
-              pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="E2"
             />
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
-              pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="A2"
             />
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
-              pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="D3"
             />
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
-              pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="G3"
             />
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
-              pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="B3"
             />
             <GuitarString
               onPitchClick={this.handleGuitarPitchClick}
-              pitches={pitches}
               selectedPitches={selectedPitches}
               tuning="E4"
             />

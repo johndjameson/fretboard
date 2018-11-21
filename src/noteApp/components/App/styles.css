@@ -15,12 +15,24 @@
   flex-grow: 1;
 }
 
+.fret {
+  color: rgba(0, 0, 0, 0.60);
+}
+
+.fret:first-child {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+}
+
 .diatonic {
   background-color: #ddd;
+  color: inherit;
 }
 
 .tonic {
   background-color: #bbb;
+  color: inherit;
 }
 
 .selected {

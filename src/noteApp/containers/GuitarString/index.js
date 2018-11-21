@@ -78,14 +78,19 @@ class GuitarString extends Component {
       <div className="string">
         {stringPitches.map((pitch, index) => (
           <div
-            className={classNames({
+            style={{
+              paddingBottom: `${15 - index / 2}px`,
+              paddingTop: `${15 - index / 2}px`
+            }}
+            className={classNames('fret', {
               diatonic: this.isPitchDiatonic(pitch),
               selected: this.isPitchSelected(pitch),
               tonic: this.isPitchTonic(pitch)
             })}
             onClick={() => onPitchClick(pitch)}
             key={pitch.name}>
-            {index} {pitch.name}
+            {index > 0 && `${index} `}
+            {pitch.name}
           </div>
         ))}
       </div>

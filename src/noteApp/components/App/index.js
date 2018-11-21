@@ -18,7 +18,7 @@ import { connect } from 'react-redux'
 
 import * as scales from 'noteApp/helpers/scales'
 import Pitch from 'noteApp/components/Pitch'
-import GuitarString from 'noteApp/containers/GuitarString'
+import String from 'noteApp/containers/String'
 import { setKeyNote, setReferencePitch, setScale } from 'noteApp/actions'
 
 // ----- Assets ----- //
@@ -171,37 +171,37 @@ class App extends Component {
             ))}
           </div>
           <div className="guitar">
-            <GuitarString
+            <String
               onPitchClick={this.handleGuitarPitchClick}
               scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="E2"
             />
-            <GuitarString
+            <String
               onPitchClick={this.handleGuitarPitchClick}
               scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="A2"
             />
-            <GuitarString
+            <String
               onPitchClick={this.handleGuitarPitchClick}
               scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="D3"
             />
-            <GuitarString
+            <String
               onPitchClick={this.handleGuitarPitchClick}
               scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="G3"
             />
-            <GuitarString
+            <String
               onPitchClick={this.handleGuitarPitchClick}
               scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}
               tuning="B3"
             />
-            <GuitarString
+            <String
               onPitchClick={this.handleGuitarPitchClick}
               scaleNotes={scaleNotes}
               selectedPitches={selectedPitches}

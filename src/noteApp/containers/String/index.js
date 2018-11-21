@@ -1,6 +1,6 @@
 // *************************************
 //
-//   GuitarString
+//   String
 //   -> Fretted guitar string
 //
 // *************************************
@@ -16,11 +16,15 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
+// ----- Assets ----- //
+
+import './styles.scss'
+
 // -------------------------------------
 //   Component
 // -------------------------------------
 
-class GuitarString extends Component {
+class String extends Component {
   static defaultProps = {
     frets: 22,
     onPitchClick: () => null,
@@ -82,10 +86,10 @@ class GuitarString extends Component {
               paddingBottom: `${15 - index / 2}px`,
               paddingTop: `${15 - index / 2}px`
             }}
-            className={classNames('fret', {
-              diatonic: this.isPitchDiatonic(pitch),
-              selected: this.isPitchSelected(pitch),
-              tonic: this.isPitchTonic(pitch)
+            className={classNames('string__fret', {
+              'string__fret--diatonic': this.isPitchDiatonic(pitch),
+              'string__fret--selected': this.isPitchSelected(pitch),
+              'string__fret--tonic': this.isPitchTonic(pitch)
             })}
             onClick={() => onPitchClick(pitch)}
             key={pitch.name}>
@@ -107,4 +111,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(GuitarString)
+export default connect(mapStateToProps)(String)

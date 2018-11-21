@@ -111,7 +111,13 @@ class App extends Component {
       setScale
     } = this.props
 
-    const scaleArray = Object.keys(scales).map(key => scales[key])
+    const scaleArray = [
+      scales.major,
+      scales.majorPentatonic,
+      scales.minor,
+      scales.minorPentatonic
+    ]
+
     const scaleNotes = this.getScaleNotes()
 
     return (

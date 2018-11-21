@@ -16,13 +16,13 @@
 }
 
 .fret {
-  color: rgba(0, 0, 0, 0.60);
-}
+  color: rgba(0, 0, 0, 0.6);
 
-.fret:first-child {
-  padding-bottom: 10px;
-  padding-top: 10px;
-  text-align: center;
+  &:first-child {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+  }
 }
 
 .diatonic {

@@ -18,7 +18,7 @@ import reducers from 'rootApp/reducers'
 
 // ----- Assets ----- //
 
-import './index.css'
+import './styles.scss'
 
 // -------------------------------------
 //   Setup

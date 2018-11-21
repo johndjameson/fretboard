@@ -23,7 +23,7 @@ import { setKeyNote, setReferencePitch, setScale } from 'noteApp/actions'
 
 // ----- Assets ----- //
 
-import './styles.css'
+import './styles.scss'
 
 // -------------------------------------
 //   Component

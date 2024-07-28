@@ -1,4 +1,4 @@
-import type { Note } from './types';
+import type { Note, Tuning } from './types';
 
 export const NOTES = [
   'A',
@@ -15,7 +15,7 @@ export const NOTES = [
   'G♯/A♭',
 ] as const;
 
-export const TUNINGS: Record<string, Readonly<Note[]>> = {
+export const TUNINGS: Record<Tuning, Readonly<Note[]>> = {
   'E Standard': ['E', 'B', 'G', 'D', 'A', 'E'],
   'Drop D': ['E', 'B', 'G', 'D', 'A', 'D'],
   'D Standard': ['D', 'A', 'F', 'C', 'G', 'D'],

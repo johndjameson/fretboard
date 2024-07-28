@@ -1,35 +1,8 @@
 import classNames from 'classnames';
 
+import { NOTES, TUNINGS } from './constants';
+import type { Note } from './types';
 import './App.css';
-
-type Note =
-  | 'A'
-  | 'A♯/B♭'
-  | 'B'
-  | 'C'
-  | 'C♯/D♭'
-  | 'D'
-  | 'D♯/E♭'
-  | 'E'
-  | 'F'
-  | 'F♯/G♭'
-  | 'G'
-  | 'G♯/A♭';
-
-const NOTES: readonly Note[] = [
-  'A',
-  'A♯/B♭',
-  'B',
-  'C',
-  'C♯/D♭',
-  'D',
-  'D♯/E♭',
-  'E',
-  'F',
-  'F♯/G♭',
-  'G',
-  'G♯/A♭',
-] as const;
 
 interface NoteProps {
   note: Note;
@@ -72,14 +45,6 @@ function GuitarString({ frets = 24, note }: GuitarStringProps) {
     </div>
   );
 }
-
-const TUNINGS = {
-  'E Standard': ['E', 'B', 'G', 'D', 'A', 'E'],
-  'Drop D': ['E', 'B', 'G', 'D', 'A', 'D'],
-  'D Standard': ['D', 'A', 'F', 'C', 'G', 'D'],
-  'Drop C': ['D', 'A', 'F', 'C', 'G', 'C'],
-  'C Standard': ['C', 'G', 'D♯/E♭', 'A♯/B♭', 'F', 'C'],
-} as const;
 
 interface TuningProps {
   tuning: keyof typeof TUNINGS;

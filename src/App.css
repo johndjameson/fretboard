@@ -1,10 +1,15 @@
+.heading {
+  margin-top: 0;
+}
+
 .guitar {
   display: grid;
   row-gap: 18px;
+  margin-bottom: 140px;
 }
 
 .guitar-string {
-  column-gap: 4px;
+  column-gap: 8px;
   display: grid;
   grid-template-columns: repeat(calc(var(--guitar-frets) + 1), 30px);
 }
@@ -24,7 +29,7 @@
 }
 
 .guitar-note--accidental {
-  background: rgb(153 153 153);
+  background: rgb(0 0 0);
   border-color: transparent;
   color: rgb(255 255 255);
   font-size: 12px;

@@ -55,7 +55,7 @@ interface GuitarStringProps {
 
 function GuitarString({ frets = 24, note }: GuitarStringProps) {
   // Number of frets plus open string
-  const fretNumbers = new Array(frets + 1).fill(null).map((_v, i) => i);
+  const fretNumbers = Array.from({ length: frets + 1 }, (_v, i) => i);
 
   const startingNoteIndex = NOTES.indexOf(note);
 
@@ -65,7 +65,10 @@ function GuitarString({ frets = 24, note }: GuitarStringProps) {
       style={{ '--guitar-frets': frets } as React.CSSProperties}
     >
       {fretNumbers.map((fret) => (
-        <GuitarNote note={NOTES[(startingNoteIndex + fret) % NOTES.length]} />
+        <GuitarNote
+          key={fret}
+          note={NOTES[(startingNoteIndex + fret) % NOTES.length]}
+        />
       ))}
     </div>
   );
@@ -79,28 +82,30 @@ const TUNINGS = {
   'C Standard': ['C', 'G', 'D♯/E♭', 'A♯/B♭', 'F', 'C'],
 } as const;
 
-function App() {
-  const [tuning, setTuning] = useState<keyof typeof TUNINGS>('E Standard');
+interface TuningProps {
+  tuning: keyof typeof TUNINGS;
+}
 
+function Tuning({ tuning }: TuningProps) {
   return (
     <>
-      <select
-        onChange={(e) => {
-          setTuning(e.target.value as typeof tuning);
-        }}
-      >
-        {Object.keys(TUNINGS).map((tuning) => (
-          <option key={tuning} value={tuning}>
-            {tuning}
-          </option>
-        ))}
-      </select>
+      <h2 className="heading">{tuning}</h2>
 
       <div className="guitar">
         {TUNINGS[tuning].map((stringNote) => (
           <GuitarString frets={24} note={stringNote} />
         ))}
       </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <>
+      {Object.keys(TUNINGS).map((tuning) => (
+        <Tuning key={tuning} tuning={tuning as keyof typeof TUNINGS} />
+      ))}
     </>
   );
 }
